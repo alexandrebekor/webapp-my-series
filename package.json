@@ -1,0 +1,8 @@
+{
+  "name": "webapp-myseries",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/alexandrebekor/webapp-myseries.git",
+  "author": "Alexandre Bekor <contato@alexandrebekor.com>",
+  "license": "MIT"
+}
