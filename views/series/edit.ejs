@@ -1,0 +1,12 @@
+<h1>Editar</h1>
+<form method="post">
+    <label for="name">Nome da série</label>
+    <input type="text" name="name" id="name" value="<%= serie.name %>">
+
+    <select name="status" id="status">
+        <% status.forEach( item => { %>
+            <option value="<%= item.id %>" <% if(item.id === serie.status) { %> selected="selected" <% } %>><%= item.name %></option>
+        <% } ) %>
+    </select>
+    <button>Atualizar</button>
+</form>

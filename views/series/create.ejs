@@ -4,9 +4,9 @@
     <input type="text" name="name" id="name">
 
     <select name="status" id="status">
-        <option value="to-watch">Assistir</option>
-        <option value="watching">Assistindo</option>
-        <option value="watched">Assistido</option>
+        <% status.forEach( item => { %>
+            <option value="<%= item.id %>"><%= item.name %></option>
+        <% }) %>
     </select>
 
     <button>Adicionar</button>
