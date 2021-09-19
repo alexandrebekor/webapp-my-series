@@ -10,13 +10,17 @@ const index = async ({ seriesModel }, req, res) => {
 }
 
 const create = (req, res) => {
-    res.render('series/create', { status })
+    res.render('series/create', { status, errors: [] })
 }
 
 const store = async ({ seriesModel }, req, res) => {
     const serie = new seriesModel(req.body)
-    await serie.save()
-    res.redirect('/series')
+    try {
+        await serie.save()
+        res.redirect('/series')
+    } catch (e) {
+        res.render('series/create', { status, errors: Object.keys(e.errors) })
+    }
 }
 
 const show = ({ seriesModel }, req, res) => {
@@ -25,15 +29,19 @@ const show = ({ seriesModel }, req, res) => {
 
 const edit = async ({ seriesModel }, req, res) => {
     const serie = await seriesModel.findOne({ _id: req.params.id })
-    res.render('series/edit', { serie, status })
+    res.render('series/edit', { serie, status, errors: [] })
 }
 
 const update = async ({ seriesModel }, req, res) => {
     const serie = await seriesModel.findOne({ _id: req.params.id })
     serie.name = req.body.name
     serie.status = req.body.status
-    await serie.save()
-    res.redirect('/series')
+    try {
+        await serie.save()
+        res.redirect('/series')
+    } catch (e) {
+        res.render('series/edit', { serie, status, errors: Object.keys(e.errors) })
+    }
 }
 
 const destroy = async ({ seriesModel }, req, res) => {

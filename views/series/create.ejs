@@ -1,4 +1,9 @@
 <h1>Create</h1>
+<% if(errors) { %>
+    <% errors.forEach(error => { %>
+        <p>Favor preencher o campo <%= error %></p>
+    <% }) %>
+<% } %>
 <form method="post">
     <label for="name">Informe o nome da série</label>
     <input type="text" name="name" id="name">
