@@ -2,6 +2,7 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const mongoose = require('mongoose')
 const pagesRouter = require('./routes/pages')
+const seriesRouter = require('./routes/series')
 
 // Server
 const app = express()
@@ -30,4 +31,6 @@ mongoose
         console.log(e)
     })
 
+// Routes
 app.use('/', pagesRouter)
+app.use('/series', seriesRouter)
