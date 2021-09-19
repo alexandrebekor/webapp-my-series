@@ -1,12 +1,13 @@
-const bodyParse = require('body-parser')
+const bodyParser = require('body-parser')
 const express = require('express')
 const mongoose = require('mongoose')
-
-app.use(bodyParse.urlencoded({ extended: true }))
+const pagesRouter = require('./routes/pages')
 
 // Server
 const app = express()
 const port = process.env.PORT || 3000
+
+app.use(bodyParser.urlencoded({ extended: true }))
 
 // Template
 const path = require('path')
@@ -29,6 +30,4 @@ mongoose
         console.log(e)
     })
 
-app.get('/', (req, res) => {
-    res.render('home')
-})
+app.use('/', pagesRouter)
