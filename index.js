@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 // Import Routing
 const pagesRouter = require('./routes/pages')
 const seriesRouter = require('./routes/series')
+const usersRouter = require('./routes/users')
 
 // Import Models
 const User = require('./models/user')
@@ -29,6 +30,7 @@ mongoose.Promise = global.Promise
 // Routes
 app.use('/', pagesRouter)
 app.use('/series', seriesRouter)
+app.use('/users', usersRouter)
 
 const createInitialUsers = async () => {
     const totalUsers = await User.count({})
