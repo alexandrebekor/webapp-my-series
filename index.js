@@ -1,14 +1,18 @@
-const bodyParser = require('body-parser')
 const express = require('express')
 const mongoose = require('mongoose')
+
+// Import Routing
 const pagesRouter = require('./routes/pages')
 const seriesRouter = require('./routes/series')
+
+// Import Models
+const User = require('./models/user')
 
 // Server
 const app = express()
 const port = process.env.PORT || 3000
-
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 // Template
 const path = require('path')
@@ -22,15 +26,34 @@ app.use(express.static('public'))
 const mongo = process.env.DATABASE || 'mongodb://localhost/webapp-myseries'
 mongoose.Promise = global.Promise
 
-mongoose
-    .connect(mongo)
-    .then(() => {
-        app.listen(port, () => console.log('connected'))
-    })
-    .catch(e => {
-        console.log(e)
-    })
-
 // Routes
 app.use('/', pagesRouter)
 app.use('/series', seriesRouter)
+
+const createInitialUsers = async () => {
+    const totalUsers = await User.count({})
+    if(totalUsers === 0) {
+        const admin = new User({
+            username: 'bekor',
+            password: '12345',
+            roles: ['restrito', 'admin']
+        })
+        await admin.save()
+
+        const user = new User({
+            username: 'bekor2',
+            password: '12345',
+            roles: ['restrito']
+        })
+        await user.save()
+    }
+}
+
+// Start database and server
+mongoose
+    .connect(mongo)
+    .then(() => {
+        createInitialUsers()
+        app.listen(port, () => console.log('connected'))
+    })
+    .catch(e => { console.log(e) })

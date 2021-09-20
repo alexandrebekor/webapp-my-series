@@ -9,6 +9,11 @@ const index = async ({ seriesModel }, req, res) => {
     res.render('series/home', { series, status })
 }
 
+const about = async ({ seriesModel }, req, res) => {
+    const serie = await seriesModel.findOne({ _id: req.params.id })
+    res.render('series/about', { serie })
+}
+
 const create = (req, res) => {
     res.render('series/create', { status, errors: [] })
 }
@@ -21,10 +26,6 @@ const store = async ({ seriesModel }, req, res) => {
     } catch (e) {
         res.render('series/create', { status, errors: Object.keys(e.errors) })
     }
-}
-
-const show = ({ seriesModel }, req, res) => {
-
 }
 
 const edit = async ({ seriesModel }, req, res) => {
@@ -49,12 +50,20 @@ const destroy = async ({ seriesModel }, req, res) => {
     res.redirect('/series')
 }
 
+const addComment = async ({ seriesModel }, req, res) => {
+    await seriesModel.updateOne({ _id: req.params.id}, {
+        $push: { comments: req.body.comment }
+    })
+    res.redirect('/series/info/' + req.params.id + '/adicionar')
+}
+
 module.exports = {
     index,
+    about,
     create,
     store,
-    show,
     edit,
     update,
-    destroy
+    destroy,
+    addComment
 }

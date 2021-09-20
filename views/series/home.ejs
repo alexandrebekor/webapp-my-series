@@ -8,7 +8,7 @@
     </header>
 
     <% series.forEach((serie) => { %>
-        <p><%= serie.name %> | <%= status.filter( item => item.id === serie.status)[0].name %> <a href="/series/excluir/<%= serie._id %>">Excluir</a> <a href="/series/editar/<%= serie._id %>">Editar</a></p>
+      <p><%= serie.name %> | <%=  serie.status %> <a href="/series/excluir/<%= serie._id %>">Excluir</a> <a href="/series/editar/<%= serie._id %>">Editar</a> <a href="/series/info/<%= serie._id %>/adicionar">Informações</a></p>
     <% }) %>
     <a href="/series/adicionar">Nova série</a>
 

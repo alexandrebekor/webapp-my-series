@@ -1,0 +1,8 @@
+<h1><%= serie.name %></h1>
+<form method="post">
+    <textarea name="comment" id="comment" cols="30" rows="10"></textarea>
+    <input type="submit" value="Adicionar Comentário">
+</form>
+<% serie.comments.forEach( comment => { %>
+    <p><%= comment %></p>
+<% }) %>
