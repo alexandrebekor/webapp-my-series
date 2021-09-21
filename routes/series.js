@@ -2,6 +2,26 @@ const express = require('express')
 const router = express.Router()
 const seriesController = require('../controllers/series')
 const seriesModel = require('../models/serie')
+const { jwt, jwtSecret } = require('../controllers/users')
+
+router.use( async (req, res, next) => {
+    const token = req.headers['x-access-token'] || req.body.token || req.query.token
+    if(token) {
+        try {
+            const payload = jwt.verify(token, jwtSecret)
+            console.log(payload)
+            if(payload.roles.indexOf('admin') >= 0) {
+                next()
+            } else {
+                res.send({ success: false })
+            }
+        } catch(e) {
+            res.send({ success: false })
+        }
+    } else {
+        res.send({ success: false })
+    }
+})
 
 // Pages
 router.get('/', seriesController.index.bind(null, { seriesModel }))
