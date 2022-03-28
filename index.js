@@ -15,6 +15,11 @@ const port = process.env.PORT || 3000
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
+// Cors
+const cors = require('cors')
+app.use(cors())
+// app.use(cores({ origin: 'https://www.agenciabekor.com' }))
+
 // Template
 const path = require('path')
 app.set('views', path.join(__dirname, 'views'))
